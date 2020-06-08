@@ -32,11 +32,31 @@ public class BallsManager : MonoBehaviour
 
     private Rigidbody2D initialBallRb;
 
+    public float intialBallVelocity = 250;
+
     public List<Ball> Balls { get; set; }
 
     private void Start()
     {
         InitBall();
+    }
+
+    private void Update()
+    {
+        if (!GameManager.Instance.IsGameStarted)
+        {
+            // Align ball position to the paddle position
+            Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
+            Vector3 ballPosition = new Vector3(paddlePosition.x, paddlePosition.y + .27f, 0);
+            initialBall.transform.position = ballPosition;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                initialBallRb.isKinematic = false;
+                initialBallRb.AddForce(new Vector2(0, intialBallVelocity));
+                GameManager.Instance.IsGameStarted = true;
+            }
+        }
     }
 
     private void InitBall()
