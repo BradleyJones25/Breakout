@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BricksManager : MonoBehaviour
 {
@@ -27,14 +28,75 @@ public class BricksManager : MonoBehaviour
 
     private int maxRows = 17;
     private int maxCols = 12;
+    private GameObject bricksContainer;
+    private float initialBrickSpawnPositionX = -1.96f;  // Get the intial spawn position for x   
+    private float initialBrickSpawnPositionY = 3.325f;  // Get the intial spawn position for y
+    private float shiftAmount = 0.365f;
+
+    public Brick brickPrefab;
 
     public Sprite[] Sprites;
 
+    public Color[] BrickColours;
+
+    public List<Brick> RemainingBricks { get; set; }
+
     public List<int[,]> LevelsData { get; set; }
+
+    public int InitialBricksCount { get; set; }
+
+    public int currentLevel;
 
     private void Start()
     {
+        this.bricksContainer = new GameObject("BricksContainer");
+        this.RemainingBricks = new List<Brick>();
         this.LevelsData = this.LoadLevelsData();
+        this.GenerateBricks();
+    }
+
+    private void GenerateBricks()
+    {
+        // Get the current level
+        int[,] currentLevelData = this.LevelsData[this.currentLevel];
+        // Iterate over the level and instantiate bricks 
+        float currentSpawnX = initialBrickSpawnPositionX;   // Set the current spawn position for x 
+        float currentSpawnY = initialBrickSpawnPositionY;   // Set the current spawn position for y
+        float zShift = 0;
+
+        // Iterate over the rows
+        for(int row = 0; row < this.maxRows; row++)
+        {
+            // Iterate over the columns
+            for(int col = 0; col < this.maxCols; col++)
+            {
+                int brickType = currentLevelData[row, col];
+
+                if(brickType > 0)
+                {
+                    // Instantiate the brick
+                    Brick newBrick = Instantiate(brickPrefab, new Vector3(currentSpawnX, currentSpawnY, 0.0f - zShift), Quaternion.identity) as Brick;
+                    newBrick.Init(bricksContainer.transform, this.Sprites[brickType - 1], this.BrickColours[brickType], brickType);
+                    // Add remaining bricks collection
+                    this.RemainingBricks.Add(newBrick);
+                    zShift += 0.0001f;
+                }
+
+                // Shift the brick x position for the next iteration
+                currentSpawnX += shiftAmount;
+                // Check if we have reached the end of the columns
+                if(col + 1 == this.maxCols)
+                {
+                    // Reset the current spawn position for x
+                    currentSpawnX = initialBrickSpawnPositionX;
+                }
+            }
+
+            // Shift the brick y position for the next iteration
+            currentSpawnY -= shiftAmount;
+        }
+
+        this.InitialBricksCount = this.RemainingBricks.Count;
     }
 
     private List<int[,]> LoadLevelsData()

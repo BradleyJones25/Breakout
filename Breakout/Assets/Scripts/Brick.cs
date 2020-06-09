@@ -8,15 +8,14 @@ public class Brick : MonoBehaviour
 {
     private SpriteRenderer sr;
     
-    public int HitPoints = 1;
+    public int hitPoints = 1;
     public ParticleSystem DestroyEffect;
 
     public static event Action<Brick> OnBrickDestruction;
 
-    private void Start()
+    private void Awake()
     {
         this.sr = this.GetComponent<SpriteRenderer>();
-        this.sr.sprite = BricksManager.Instance.Sprites[this.HitPoints - 1];    // Will be delayed later in init
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -27,9 +26,9 @@ public class Brick : MonoBehaviour
 
     private void ApplyCollisionLogic(Ball ball)
     {
-        this.HitPoints--;
+        this.hitPoints--;
 
-        if(this.HitPoints <= 0)
+        if(this.hitPoints <= 0)
         {
             OnBrickDestruction?.Invoke(this);
             SpawnDestroyEffect();
@@ -38,7 +37,7 @@ public class Brick : MonoBehaviour
         else
         {
             // Change the sprite
-            this.sr.sprite = BricksManager.Instance.Sprites[this.HitPoints - 1];
+            this.sr.sprite = BricksManager.Instance.Sprites[this.hitPoints - 1];
         }
     }
 
@@ -51,5 +50,13 @@ public class Brick : MonoBehaviour
         MainModule mm = effect.GetComponent<ParticleSystem>().main;
         mm.startColor = this.sr.color;
         Destroy(effect, DestroyEffect.main.startLifetime.constant);
+    }
+
+    public void Init(Transform containerTransform, Sprite sprite, Color color, int hitpoints)
+    {
+        this.transform.SetParent(containerTransform);
+        this.sr.sprite = sprite;
+        this.sr.color = color;
+        this.hitPoints = hitpoints;
     }
 }
