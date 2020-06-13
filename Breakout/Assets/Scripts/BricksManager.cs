@@ -55,6 +55,25 @@ public class BricksManager : MonoBehaviour
         this.GenerateBricks();
     }
 
+    public void LoadNextLevel()
+    {
+        // Increment the current level by 1
+        this.currentLevel++;
+        
+        // Check if the current level after the incrementation 
+        // is greater/equal to the count of the levels
+        if (this.currentLevel >= this.LevelsData.Count)
+        {
+            // Show victory screen
+            GameManager.Instance.ShowVictoryScreen();
+        }
+        else
+        {
+            // Load the next level
+            this.LoadLevel(this.currentLevel);
+        }
+    }
+
     public void LoadLevel(int level)
     {
         this.currentLevel = level;
