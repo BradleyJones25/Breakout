@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameStarted { get; set; }
 
+    public static event Action<int> OnLifeLost;
+
     private void Start()
     {
         this.Lives = this.availableLives;
@@ -76,6 +78,8 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                // Invoke OnLifeLost to pass remaining lives
+                OnLifeLost?.Invoke(this.Lives);
                 // Reset balls
                 BallsManager.Instance.ResetBalls();
                 // Stop the game
