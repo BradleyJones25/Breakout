@@ -61,6 +61,24 @@ public class BallsManager : MonoBehaviour
         }
     }
 
+    public void SpawnBalls(Vector3 position, int count)
+    {
+        // Iterate on the count
+        for (int i = 0; i < count; i++)
+        {
+            // Spawn the ball
+            Ball spawnedBall = Instantiate(ballPrefab, position, Quaternion.identity) as Ball;
+            // Get rigidbody component of the ball
+            Rigidbody2D spawnedBallRb = spawnedBall.GetComponent<Rigidbody2D>();
+            // Apply gravity
+            spawnedBallRb.isKinematic = false;
+            // Apply force
+            spawnedBallRb.AddForce(new Vector2(0, intialBallVelocity));
+            // Add this spawned ball to the balls collection
+            this.Balls.Add(spawnedBall);
+        }
+    }
+
     public void ResetBalls()
     {
         // Destroy all active balls

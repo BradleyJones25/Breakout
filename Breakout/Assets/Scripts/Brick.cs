@@ -32,6 +32,7 @@ public class Brick : MonoBehaviour
         {
             BricksManager.Instance.RemainingBricks.Remove(this);
             OnBrickDestruction?.Invoke(this);
+            OnBrickDestroy();
             SpawnDestroyEffect();
             Destroy(this.gameObject);
         }
@@ -40,6 +41,57 @@ public class Brick : MonoBehaviour
             // Change the sprite
             this.sr.sprite = BricksManager.Instance.Sprites[this.hitPoints - 1];
         }
+    }
+
+    private void OnBrickDestroy()
+    {
+        // Create a random range (0 - 100) for collectables to spawn
+        float buffSpawnChance = UnityEngine.Random.Range(0, 100f);
+        float debuffSpawnChance = UnityEngine.Random.Range(0, 100f);
+        // Boolean to determine if a buff or debuff has already spawned
+        bool alreadySpawned = false;
+
+        // Compare buffSpawnChance with CollctablesManager buffChance
+        if (buffSpawnChance <= CollectablesManager.Instance.buffChance)
+        {
+            // State that a buff has already been spawned
+            alreadySpawned = true;
+            // If the value is less than the defined, spawn a buff
+            Collectable newBuff = this.SpawnCollectable(true);
+        }
+        // Compare debuffSpawnChance with CollctablesManager debuffChance
+        // Ignore if we have already spawned a buff 
+        if (debuffSpawnChance <= CollectablesManager.Instance.debuffChance && !alreadySpawned)
+        {
+            // If the value is less than the defined, spawn a debuff
+            Collectable newDebuff = this.SpawnCollectable(false);
+        }
+    }
+
+    private Collectable SpawnCollectable(bool isBuff)
+    {
+        List<Collectable> collection;
+
+        // Check for a buff or debuff
+        if (isBuff)
+        {
+            // Use AvailableBuffs instance
+            collection = CollectablesManager.Instance.AvailableBuffs;
+        }
+        else
+        {
+            // Use AvailableDebuffs instance
+            collection = CollectablesManager.Instance.AvailableDebuffs;
+        }
+
+        // Get 1 random buff from the collection using a random index (0 - count)
+        int buffIndex = UnityEngine.Random.Range(0, collection.Count);
+        // Pick a collectable based on the random index
+        Collectable prefab = collection[buffIndex];
+        // Spawn this new collectable
+        Collectable newCollectable = Instantiate(prefab, this.transform.position, Quaternion.identity) as Collectable;
+
+        return newCollectable;
     }
 
     private void SpawnDestroyEffect()
