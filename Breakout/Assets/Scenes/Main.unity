@@ -1985,10 +1985,11 @@ MonoBehaviour:
   AvailableBuffs:
   - {fileID: 567027587958095568, guid: 7b53d7b725cb49b40bfdf499623a0a7f, type: 3}
   - {fileID: 234144872091218772, guid: 4b26107faa2da4045afe980181ad3f57, type: 3}
+  - {fileID: 1811157289422666317, guid: 25a066c51164c074988087bbd6cec4ac, type: 3}
   AvailableDebuffs:
   - {fileID: 4087535339210689215, guid: 0240c19cd12be2047b69c16337e6f399, type: 3}
-  buffChance: 20
-  debuffChance: 20
+  buffChance: 10
+  debuffChance: 5
 --- !u!1 &603087556
 GameObject:
   m_ObjectHideFlags: 0

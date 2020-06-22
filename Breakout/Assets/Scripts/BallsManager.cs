@@ -61,13 +61,20 @@ public class BallsManager : MonoBehaviour
         }
     }
 
-    public void SpawnBalls(Vector3 position, int count)
+    public void SpawnBalls(Vector3 position, int count, bool isLightningBall)
     {
         // Iterate on the count
         for (int i = 0; i < count; i++)
         {
             // Spawn the ball
             Ball spawnedBall = Instantiate(ballPrefab, position, Quaternion.identity) as Ball;
+            // Check if the ball is lightning ball
+            if (isLightningBall)
+            {
+                // Start the lightning ball for the new ball
+                spawnedBall.StartLightningBall();
+            }
+
             // Get rigidbody component of the ball
             Rigidbody2D spawnedBallRb = spawnedBall.GetComponent<Rigidbody2D>();
             // Apply gravity
