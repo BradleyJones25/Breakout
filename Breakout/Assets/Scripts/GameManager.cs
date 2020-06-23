@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     private void OnBallDeath(Ball obj)
