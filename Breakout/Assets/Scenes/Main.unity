@@ -575,6 +575,7 @@ GameObject:
   - component: {fileID: 271491166}
   - component: {fileID: 271491165}
   - component: {fileID: 271491164}
+  - component: {fileID: 271491167}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -644,18 +645,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 271491165}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 546546521}
-        m_MethodName: RestartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &271491165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,6 +683,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271491162}
   m_CullTransparentMesh: 0
+--- !u!114 &271491167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271491162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a552b0215a69e404ea20d8717aefbf12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 2
 --- !u!1 &274928282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,10 +1541,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 520110319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b60feaf4511910e4181942f0ea12d7f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a552b0215a69e404ea20d8717aefbf12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredCanvasType: 1
+  buttonType: 0
 --- !u!1 &546546519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,8 +1588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a92db81a5e1f41818d28ead331abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverScreen: {fileID: 1327215628}
-  victoryScreen: {fileID: 37353597}
   availableLives: 3
 --- !u!1 &553080364
 GameObject:
@@ -2734,10 +2735,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1025561555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b60feaf4511910e4181942f0ea12d7f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a552b0215a69e404ea20d8717aefbf12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredCanvasType: 0
+  buttonType: 3
 --- !u!1 &1036718141
 GameObject:
   m_ObjectHideFlags: 0
@@ -3739,10 +3740,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1376977319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b60feaf4511910e4181942f0ea12d7f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a552b0215a69e404ea20d8717aefbf12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredCanvasType: 0
+  buttonType: 3
 --- !u!1 &1449531051
 GameObject:
   m_ObjectHideFlags: 0
@@ -4094,18 +4095,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1478763985}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 546546521}
-        m_MethodName: RestartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1478763985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4152,10 +4142,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1478763982}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b60feaf4511910e4181942f0ea12d7f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a552b0215a69e404ea20d8717aefbf12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredCanvasType: 1
+  buttonType: 2
 --- !u!1 &1491266929
 GameObject:
   m_ObjectHideFlags: 0
@@ -4345,6 +4335,7 @@ GameObject:
   - component: {fileID: 1553546186}
   - component: {fileID: 1553546185}
   - component: {fileID: 1553546184}
+  - component: {fileID: 1553546187}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -4452,6 +4443,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553546182}
   m_CullTransparentMesh: 0
+--- !u!114 &1553546187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553546182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a552b0215a69e404ea20d8717aefbf12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 1
 --- !u!1 &1568394681
 GameObject:
   m_ObjectHideFlags: 0

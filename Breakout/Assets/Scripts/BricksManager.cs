@@ -50,7 +50,7 @@ public class BricksManager : MonoBehaviour
 
     public int currentLevel;
 
-    private void Start()
+    public void StartGame()
     {
         this.bricksContainer = new GameObject("BricksContainer");
         this.LevelsData = this.LoadLevelsData();
@@ -83,7 +83,7 @@ public class BricksManager : MonoBehaviour
         this.GenerateBricks();
     }
 
-    private void ClearRemainingBricks()
+    public void ClearRemainingBricks()
     {
         foreach (Brick brick in this.RemainingBricks.ToList())
         {

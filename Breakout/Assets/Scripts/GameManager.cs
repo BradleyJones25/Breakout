@@ -27,9 +27,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    public GameObject gameOverScreen;
-
-    public GameObject victoryScreen;
+    CanvasManager canvasManager;
 
     public int availableLives = 3;
 
@@ -40,6 +38,11 @@ public class GameManager : MonoBehaviour
     public static event Action<int> OnLifeLost;
 
     private void Start()
+    {
+        canvasManager = CanvasManager.GetInstance();
+    }
+
+    public void StartGame()
     {
         this.Lives = this.availableLives;
         Screen.SetResolution(540, 960, false);
@@ -60,11 +63,10 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void BackToMainMenu()
-    {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        //StartGame();
+        //BricksManager.Instance.StartGame();
+        //BallsManager.Instance.StartGame();
+        //BallsManager.Instance.Update();
     }
 
     private void OnBallDeath(Ball obj)
@@ -79,7 +81,9 @@ public class GameManager : MonoBehaviour
             if (this.Lives < 1)
             {
                 // Show game over screen
-                gameOverScreen.SetActive(true);
+                canvasManager.SwitchCanvas(CanvasType.GameOverScreen);
+                // Clear remaining bricks
+                BricksManager.Instance.ClearRemainingBricks();
             }
             else
             {
@@ -98,7 +102,7 @@ public class GameManager : MonoBehaviour
     public void ShowVictoryScreen()
     {
         // Show victory screen
-        victoryScreen.SetActive(true);
+        canvasManager.SwitchCanvas(CanvasType.VictoryScreen);
     }
 
     private void OnDisable()
