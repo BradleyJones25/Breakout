@@ -38,13 +38,13 @@ public class BallsManager : MonoBehaviour
 
     public List<Ball> Balls { get; set; }
 
-    public void StartGame()
+    private void Start()
     {
         InitBall();
     }
 
     private void Update()
-    {
+    {       
         if (!GameManager.Instance.IsGameStarted)
         {
             // Align ball position to the paddle position
@@ -52,7 +52,7 @@ public class BallsManager : MonoBehaviour
             Vector3 ballPosition = new Vector3(paddlePosition.x, paddlePosition.y + .27f, 0);
             initialBall.transform.position = ballPosition;
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && GameManager.Instance.IsGameLoaded == true)
             {
                 initialBallRb.isKinematic = false;
                 initialBallRb.AddForce(new Vector2(0, intialBallVelocity));

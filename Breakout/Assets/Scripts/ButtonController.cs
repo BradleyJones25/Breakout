@@ -33,9 +33,7 @@ public class ButtonController : MonoBehaviour
             case ButtonType.START_GAME:
                 // Start the game
                 canvasManager.SwitchCanvas(CanvasType.HUD);
-                GameManager.Instance.StartGame();
-                BricksManager.Instance.StartGame();
-                BallsManager.Instance.StartGame();
+                GameManager.Instance.InitGame();
                 break;
             case ButtonType.QUIT_GAME:
                 // Quit the game
@@ -44,11 +42,15 @@ public class ButtonController : MonoBehaviour
             case ButtonType.RESTART_GAME:
                 // Restart the game
                 canvasManager.SwitchCanvas(CanvasType.HUD);
+                GameManager.Instance.InitGame();
                 GameManager.Instance.RestartGame();
+                BricksManager.Instance.LoadLevel(0);
                 break;
             case ButtonType.MAIN_MENU:
                 // Back to main menu
                 canvasManager.SwitchCanvas(CanvasType.MainMenuScreen);
+                GameManager.Instance.RestartGame();
+                BricksManager.Instance.LoadLevel(0);
                 break;
         }
     }

@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     public int Lives { get; set; }
 
+    public bool IsGameLoaded { get; set; }
+
     public bool IsGameStarted { get; set; }
 
     public static event Action<int> OnLifeLost;
@@ -40,14 +42,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         canvasManager = CanvasManager.GetInstance();
+        //this.Lives = this.availableLives;
+        //Screen.SetResolution(540, 960, false);
+        //Ball.OnBallDeath += OnBallDeath;
+        //Brick.OnBrickDestruction += OnBrickDestruction;
     }
 
-    public void StartGame()
+    public void InitGame()
     {
         this.Lives = this.availableLives;
         Screen.SetResolution(540, 960, false);
         Ball.OnBallDeath += OnBallDeath;
         Brick.OnBrickDestruction += OnBrickDestruction;
+        GameManager.Instance.IsGameLoaded = true;
     }
 
     private void OnBrickDestruction(Brick obj)
@@ -62,11 +69,12 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //StartGame();
-        //BricksManager.Instance.StartGame();
-        //BallsManager.Instance.StartGame();
-        //BallsManager.Instance.Update();
+        // Invoke OnLifeLost to pass remaining lives
+        OnLifeLost?.Invoke(this.Lives);
+        // Reset balls
+        BallsManager.Instance.ResetBalls();
+        // Stop the game
+        IsGameStarted = false;
     }
 
     private void OnBallDeath(Ball obj)
@@ -82,17 +90,11 @@ public class GameManager : MonoBehaviour
             {
                 // Show game over screen
                 canvasManager.SwitchCanvas(CanvasType.GameOverScreen);
-                // Clear remaining bricks
-                BricksManager.Instance.ClearRemainingBricks();
+                GameManager.Instance.IsGameLoaded = false;
             }
             else
             {
-                // Invoke OnLifeLost to pass remaining lives
-                OnLifeLost?.Invoke(this.Lives);
-                // Reset balls
-                BallsManager.Instance.ResetBalls();
-                // Stop the game
-                IsGameStarted = false;
+                RestartGame();
                 // Reload level
                 BricksManager.Instance.LoadLevel(BricksManager.Instance.currentLevel);
             }
@@ -103,6 +105,7 @@ public class GameManager : MonoBehaviour
     {
         // Show victory screen
         canvasManager.SwitchCanvas(CanvasType.VictoryScreen);
+        GameManager.Instance.IsGameLoaded = false;
     }
 
     private void OnDisable()
