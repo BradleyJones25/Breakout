@@ -6,19 +6,35 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    #region Singleton
+
+    private static UIManager _instance;
+
+    public static UIManager Instance => _instance;
+
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+
+    #endregion
+
     public TextMeshProUGUI target, scoreText, livesText;
 
     public int Score { get; set; }
 
-    private void Awake()
+    private void Start()
     {
         Brick.OnBrickDestruction += OnBrickDestruction;
         BricksManager.OnLevelLoaded += OnLevelLoaded;
         GameManager.OnLifeLost += OnLifeLost;
-    }
-
-    private void Start()
-    {
         OnLifeLost(GameManager.Instance.availableLives);
     }
 
@@ -34,8 +50,16 @@ public class UIManager : MonoBehaviour
     }
 
     private void UpdateScoreText(int increment)
-    {
-        this.Score += increment;
+    {        
+        if (GameManager.Instance.IsGameLoaded == false)
+        {
+            this.Score = 0;
+        }
+        else
+        {
+            this.Score += increment;
+        }
+        
         string scoreString = this.Score.ToString().PadLeft(5, '0');
         scoreText.text = $"SCORE:{Environment.NewLine}{scoreString}";
     }

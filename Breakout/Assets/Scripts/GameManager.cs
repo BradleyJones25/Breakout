@@ -42,16 +42,16 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         canvasManager = CanvasManager.GetInstance();
+        Screen.SetResolution(540, 960, false);
         //this.Lives = this.availableLives;
-        //Screen.SetResolution(540, 960, false);
         //Ball.OnBallDeath += OnBallDeath;
         //Brick.OnBrickDestruction += OnBrickDestruction;
     }
 
     public void InitGame()
     {
+        //Screen.SetResolution(540, 960, false);
         this.Lives = this.availableLives;
-        Screen.SetResolution(540, 960, false);
         Ball.OnBallDeath += OnBallDeath;
         Brick.OnBrickDestruction += OnBrickDestruction;
         GameManager.Instance.IsGameLoaded = true;
@@ -91,9 +91,13 @@ public class GameManager : MonoBehaviour
                 // Show game over screen
                 canvasManager.SwitchCanvas(CanvasType.GameOverScreen);
                 GameManager.Instance.IsGameLoaded = false;
+                GameManager.Instance.RestartGame();
+                BricksManager.Instance.LoadLevel(0);
+                OnLifeLost(GameManager.Instance.availableLives);
             }
             else
             {
+                // Reset game (lives and balls)
                 RestartGame();
                 // Reload level
                 BricksManager.Instance.LoadLevel(BricksManager.Instance.currentLevel);
@@ -106,6 +110,9 @@ public class GameManager : MonoBehaviour
         // Show victory screen
         canvasManager.SwitchCanvas(CanvasType.VictoryScreen);
         GameManager.Instance.IsGameLoaded = false;
+        GameManager.Instance.RestartGame();
+        BricksManager.Instance.LoadLevel(0);
+        OnLifeLost(GameManager.Instance.availableLives);
     }
 
     private void OnDisable()

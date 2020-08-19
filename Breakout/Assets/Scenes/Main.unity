@@ -2308,7 +2308,7 @@ MonoBehaviour:
   - {r: 1, g: 0.7843138, b: 0, a: 1}
   - {r: 1, g: 0.33333334, b: 0, a: 1}
   - {r: 0.8627451, g: 0.078431375, b: 0, a: 1}
-  currentLevel: 0
+  currentLevel: 4
 --- !u!1 &642975626
 GameObject:
   m_ObjectHideFlags: 0

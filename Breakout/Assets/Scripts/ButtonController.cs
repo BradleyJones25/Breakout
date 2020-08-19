@@ -43,19 +43,15 @@ public class ButtonController : MonoBehaviour
                 // Restart the game
                 canvasManager.SwitchCanvas(CanvasType.HUD);
                 GameManager.Instance.InitGame();
-                GameManager.Instance.RestartGame();
-                BricksManager.Instance.LoadLevel(0);
                 break;
             case ButtonType.MAIN_MENU:
                 // Back to main menu
                 canvasManager.SwitchCanvas(CanvasType.MainMenuScreen);
-                GameManager.Instance.RestartGame();
-                BricksManager.Instance.LoadLevel(0);
                 break;
         }
     }
 
-    public void QuitGame()
+    private void QuitGame()
     {
         Debug.Log("QUIT GAME!");
         Application.Quit();
